@@ -3,21 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse", "Warehouse\Warehouse.csproj", "{34017081-C212-4960-98AB-E2DEC581261C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse", "Warehouse\Warehouse.csproj", "{34017081-C212-4960-98AB-E2DEC581261C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{DD82ED00-0143-42A2-8EDC-6CC6CB976851}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{DD82ED00-0143-42A2-8EDC-6CC6CB976851}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{7C7B1544-4078-4333-BD5C-832705E2ED81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{44F78B0E-9C6C-48FF-BC15-4302F9B8E7FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{44F78B0E-9C6C-48FF-BC15-4302F9B8E7FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{DA683A71-70F2-4C2E-86BA-115D846511DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{DA683A71-70F2-4C2E-86BA-115D846511DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{9909E01C-E8C6-4593-B5D3-C4AA0FF73206}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{9909E01C-E8C6-4593-B5D3-C4AA0FF73206}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Contracts", "Service.Contracts\Service.Contracts.csproj", "{240F9B57-6B5E-4BC2-9C0C-45E3743CC4FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Contracts", "Service.Contracts\Service.Contracts.csproj", "{240F9B57-6B5E-4BC2-9C0C-45E3743CC4FB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{F01A8C59-7B4B-4755-A151-868FFC7CCD6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{F01A8C59-7B4B-4755-A151-868FFC7CCD6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{DD82ED00-0143-42A2-8EDC-6CC6CB976851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD82ED00-0143-42A2-8EDC-6CC6CB976851}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD82ED00-0143-42A2-8EDC-6CC6CB976851}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C7B1544-4078-4333-BD5C-832705E2ED81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C7B1544-4078-4333-BD5C-832705E2ED81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C7B1544-4078-4333-BD5C-832705E2ED81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C7B1544-4078-4333-BD5C-832705E2ED81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44F78B0E-9C6C-48FF-BC15-4302F9B8E7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44F78B0E-9C6C-48FF-BC15-4302F9B8E7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44F78B0E-9C6C-48FF-BC15-4302F9B8E7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU

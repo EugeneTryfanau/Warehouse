@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using Entities.Models;
 using Serilog;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -21,6 +22,17 @@ namespace Service
             _mapper = mapper;
         }
 
+        public DepartmentDto CreateDepartment(DepartmentForCreationDto departmentForCreationDto)
+        {
+            var department = _mapper.Map<Department>(departmentForCreationDto);
+
+            _repositoryManager.Department.CreateDepartment(department);
+            _repositoryManager.Save();
+
+            var departmentDto = _mapper.Map<DepartmentDto>(department);
+            return departmentDto;
+        }
+
         public IEnumerable<DepartmentDto> GetAllDepartments()
         {
             var departments = _repositoryManager.Department.GetAllDepartments();
@@ -37,6 +49,29 @@ namespace Service
                 throw new DepartmentNotFoundException(departmentId);
             var departmenrDto = _mapper.Map<DepartmentDto>(department);
             return departmenrDto;
+        }
+
+        public void UpdateDepartment(Guid departmentId, DepartmentForUpdateDto departmentForUpdate)
+        {
+            var department = _repositoryManager.Department.GetDepartment(departmentId);
+
+            if (department is null)
+                throw new DepartmentNotFoundException(departmentId);
+
+            _mapper.Map(departmentForUpdate, department);
+            _repositoryManager.Save();
+
+        }
+
+        public void DeleteDepartment(Guid departmentId)
+        {
+            var department = _repositoryManager.Department.GetDepartment(departmentId);
+
+            if (department is null)
+                throw new DepartmentNotFoundException(departmentId);
+
+            _repositoryManager.Department.DeleteDepartment(department);
+            _repositoryManager.Save();
         }
     }
 }

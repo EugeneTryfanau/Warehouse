@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Serilog;
 using Service.Contracts;
 
 namespace Service
@@ -10,11 +11,11 @@ namespace Service
         private readonly Lazy<IWorkerService> _workerService;
         private readonly Lazy<IProductService> _productService;
 
-        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper)
+        public ServiceManager(IRepositoryManager repositoryManager, ILogger logger, IMapper mapper)
         {
-            _departmentService = new Lazy<IDepartmentService>(() => new DepartmentService(repositoryManager, mapper));
-            _workerService = new Lazy<IWorkerService>(() => new WorkerService(repositoryManager, mapper));
-            _productService = new Lazy<IProductService>(() => new ProductService(repositoryManager, mapper));
+            _departmentService = new Lazy<IDepartmentService>(() => new DepartmentService(repositoryManager, logger, mapper));
+            _workerService = new Lazy<IWorkerService>(() => new WorkerService(repositoryManager, logger, mapper));
+            _productService = new Lazy<IProductService>(() => new ProductService(repositoryManager, logger, mapper));
         }
 
         public IDepartmentService DepartmentService => _departmentService.Value;

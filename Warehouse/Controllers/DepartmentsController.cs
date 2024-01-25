@@ -3,7 +3,7 @@ using Service.Contracts;
 
 namespace Warehouse.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/departments")]
     [ApiController]
     public class DepartmentsController : ControllerBase
     {
@@ -17,16 +17,8 @@ namespace Warehouse.Controllers
         [HttpGet]
         public IActionResult GetDepartments()
         {
-            try
-            {
-                var departments =
-                _serviceManager.DepartmentService.GetAllDepartments();
-                return Ok(departments);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            var departments = _serviceManager.DepartmentService.GetAllDepartments();
+            return Ok(departments);
         }
 
     }

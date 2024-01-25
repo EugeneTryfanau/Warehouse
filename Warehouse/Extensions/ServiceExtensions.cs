@@ -1,8 +1,8 @@
 ﻿using Contracts;
-using Repository;
-using Service.Contracts;
-using Service;
 using Microsoft.EntityFrameworkCore;
+using Repository;
+using Service;
+using Service.Contracts;
 
 namespace Warehouse.Extensions
 {
@@ -18,6 +18,7 @@ namespace Warehouse.Extensions
                     .AllowAnyHeader());
             });
         }
+
         public static void ConfigureRepositoryManager(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
@@ -32,6 +33,6 @@ namespace Warehouse.Extensions
         {
             services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
         }
-            
+
     }
 }

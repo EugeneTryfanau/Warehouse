@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 using Warehouse.Extensions;
 
@@ -24,15 +25,11 @@ var logger = app.Services.GetRequiredService<Serilog.ILogger>();
 
 app.ConfigureExceptionHandler(logger);
 
-if (app.Environment.IsProduction())
+if (app.Environment.IsDevelopment())
+    app.UseDeveloperExceptionPage();
+else
     app.UseHsts();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-}
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -42,6 +39,15 @@ if (app.Environment.IsDevelopment())
 app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.All
+});
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

@@ -5,7 +5,7 @@ namespace Contracts
     public interface IDepartmentRepository
     {
         IEnumerable<Department> GetAllDepartments();
-        Department GetDepartment(Guid departmentId);
+        Department? GetDepartment(Guid departmentId);
         void CreateDepartment(Department department);
         void UpdateDepartment(Department department);
         void DeleteDepartment(Department department);

@@ -17,7 +17,7 @@ namespace Repository
             return GetAll().OrderBy(p => p.Name).ToList();
         }
 
-        public Product GetProduct(Guid productId)
+        public Product? GetProduct(Guid productId)
         {
             return GetByCondition(p => p.Id.Equals(productId)).SingleOrDefault();
         }

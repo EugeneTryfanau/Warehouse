@@ -22,7 +22,7 @@ namespace Repository
             return GetAll().OrderBy(w => w.LastName).ToList();
         }
 
-        public Worker GetWorker(Guid workerId)
+        public Worker? GetWorker(Guid workerId)
         {
             return GetByCondition(w => w.Id.Equals(workerId)).SingleOrDefault();
         }

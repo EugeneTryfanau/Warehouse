@@ -17,7 +17,7 @@ namespace Repository
             return GetAll().OrderBy(d => d.Name).ToList();
         }
 
-        public Department GetDepartment(Guid departmentId)
+        public Department? GetDepartment(Guid departmentId)
         {
             return GetByCondition(d => d.Id.Equals(departmentId)).SingleOrDefault();
         }

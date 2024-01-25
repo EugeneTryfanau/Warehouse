@@ -9,7 +9,7 @@ namespace Repository
 
         public void CreateDepartment(Department department)
         {
-            throw new NotImplementedException();
+            Create(department);
         }
 
         public IEnumerable<Department> GetAllDepartments()
@@ -19,17 +19,17 @@ namespace Repository
 
         public Department GetDepartment(Guid departmentId)
         {
-            throw new NotImplementedException();
+            return GetByCondition(d => d.Id.Equals(departmentId)).SingleOrDefault();
         }
 
         public void UpdateDepartment(Department department)
         {
-            throw new NotImplementedException();
+            Update(department);
         }
 
         public void DeleteDepartment(Department department)
         {
-            throw new NotImplementedException();
+            Delete(department);
         }
     }
 }

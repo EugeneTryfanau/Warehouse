@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Serilog;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -25,9 +26,17 @@ namespace Service
             var departments = _repositoryManager.Department.GetAllDepartments();
             var departmentsDto = _mapper.Map<IEnumerable<DepartmentDto>>(departments);
 
-            _logger.Information($"user got all Departments");
-
             return departmentsDto;
+        }
+
+        public DepartmentDto GetDepartment(Guid departmentId)
+        {
+            var department = _repositoryManager.Department.GetDepartment(departmentId);
+
+            if (department is null)
+                throw new DepartmentNotFoundException(departmentId);
+            var departmenrDto = _mapper.Map<DepartmentDto>(department);
+            return departmenrDto;
         }
     }
 }

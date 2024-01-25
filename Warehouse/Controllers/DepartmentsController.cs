@@ -9,9 +9,9 @@ namespace Warehouse.Controllers
     {
         private readonly IServiceManager _serviceManager;
 
-        public DepartmentsController(IServiceManager services)
+        public DepartmentsController(IServiceManager serviceManager)
         {
-            _serviceManager = services;
+            _serviceManager = serviceManager;
         }
 
         [HttpGet]
@@ -21,5 +21,11 @@ namespace Warehouse.Controllers
             return Ok(departments);
         }
 
+        [HttpGet("{id:guid}")]
+        public IActionResult GetDepartment(Guid departmentId)
+        {
+            var department = _serviceManager.DepartmentService.GetDepartment(departmentId);
+            return Ok(department);
+        }
     }
 }

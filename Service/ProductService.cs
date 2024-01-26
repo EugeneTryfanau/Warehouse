@@ -60,7 +60,7 @@ namespace Service
             return productDto;
         }
 
-        public void UpdateProduct(Guid departmentId, Guid productId, ProductForUpdateDto productForUpdate)
+        public void UpdateProduct(Guid departmentId, Guid productId, ProductForUpdateDto productForUpdateDto)
         {
             var department = _repositoryManager.Department.GetDepartment(departmentId);
             if (department is null)
@@ -70,7 +70,7 @@ namespace Service
             if (productEntity is null)
                 throw new ProductNotFoundException(productId);
 
-            _mapper.Map(productForUpdate, productEntity);
+            _mapper.Map(productForUpdateDto, productEntity);
             _repositoryManager.Save();
         }
 

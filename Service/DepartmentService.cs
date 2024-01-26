@@ -44,29 +44,25 @@ namespace Service
         public DepartmentDto GetDepartment(Guid departmentId)
         {
             var department = _repositoryManager.Department.GetDepartment(departmentId);
-
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
             var departmenrDto = _mapper.Map<DepartmentDto>(department);
             return departmenrDto;
         }
 
-        public void UpdateDepartment(Guid departmentId, DepartmentForUpdateDto departmentForUpdate)
+        public void UpdateDepartment(Guid departmentId, DepartmentForUpdateDto departmentForUpdateDto)
         {
             var department = _repositoryManager.Department.GetDepartment(departmentId);
-
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            _mapper.Map(departmentForUpdate, department);
+            _mapper.Map(departmentForUpdateDto, department);
             _repositoryManager.Save();
-
         }
 
         public void DeleteDepartment(Guid departmentId)
         {
             var department = _repositoryManager.Department.GetDepartment(departmentId);
-
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 

@@ -22,7 +22,7 @@ namespace Warehouse.Controllers
             return Ok(departments);
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("{departmentId:guid}", Name = "DepartmentById")]
         public IActionResult GetDepartment(Guid departmentId)
         {
             var department = _serviceManager.DepartmentService.GetDepartment(departmentId);
@@ -35,17 +35,18 @@ namespace Warehouse.Controllers
                 return BadRequest("DepartmentForCreationDto object is null");
 
             var createdDepertment = _serviceManager.DepartmentService.CreateDepartment(departmentForCreationDto);
-
             return CreatedAtRoute("DepartmentById", createdDepertment);
         }
 
-        [HttpPut]
+        [HttpPut("departmentId:guid")]
         public IActionResult UpdateDepartment(Guid departmentId, [FromBody] DepartmentForUpdateDto departmentForUpdateDto)
         {
-            return Ok();
+            if (departmentForUpdateDto is null)
+                return BadRequest("DepartmentForUpdateDto object is null");            _serviceManager.DepartmentService.UpdateDepartment(departmentId, departmentForUpdateDto);
+            return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("departmentId:guid")]
         public IActionResult DeleteDepartment(Guid departmentId)
         {
             _serviceManager.DepartmentService.DeleteDepartment(departmentId);

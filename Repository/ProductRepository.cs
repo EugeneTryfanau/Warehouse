@@ -7,19 +7,20 @@ namespace Repository
     {
         public ProductRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
 
-        public void CreateProduct(Product product)
+        public void CreateProduct(Guid departmentId, Product product)
         {
+            product.DepartnentId = departmentId;
             Create(product);
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts(Guid departmentId)
         {
-            return GetAll().OrderBy(p => p.Name).ToList();
+            return GetByCondition(p => p.DepartnentId.Equals(departmentId)).OrderBy(p => p.Name).ToList();
         }
 
-        public Product? GetProduct(Guid productId)
+        public Product? GetProduct(Guid departmentId, Guid productId)
         {
-            return GetByCondition(p => p.Id.Equals(productId)).SingleOrDefault();
+            return GetByCondition(p => p.DepartnentId.Equals(departmentId) && p.Id.Equals(productId)).SingleOrDefault();
         }
 
         public void UpdateProduct(Product product)

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Warehouse.Extensions;
 
@@ -13,9 +14,12 @@ builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.Models;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -22,7 +23,7 @@ namespace Warehouse.Controllers
             return Ok(departments);
         }
 
-        [HttpGet("{departmentId:guid}", Name = "DepartmentById")]
+        [HttpGet("{departmentId:guid}", Name = "GetDepartment")]
         public IActionResult GetDepartment(Guid departmentId)
         {
             var department = _serviceManager.DepartmentService.GetDepartment(departmentId);
@@ -35,7 +36,7 @@ namespace Warehouse.Controllers
                 return BadRequest("DepartmentForCreationDto object is null");
 
             var createdDepertment = _serviceManager.DepartmentService.CreateDepartment(departmentForCreationDto);
-            return CreatedAtRoute("DepartmentById", createdDepertment);
+            return CreatedAtRoute("GetDepartment", new { departmentId = createdDepertment.Id }, createdDepertment);
         }
 
         [HttpPut("departmentId:guid")]

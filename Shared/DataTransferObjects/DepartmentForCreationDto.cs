@@ -1,4 +1,4 @@
 ﻿namespace Shared.DataTransferObjects
 {
-    public record DepartmentForCreationDto(string DepartmentName, ICollection<ProductForCreationDto> Products);
+    public record DepartmentForCreationDto(string Name, ICollection<ProductForCreationDto> Products, ICollection<WorkerForCreationDto> Workers);
 }

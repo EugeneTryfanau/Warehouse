@@ -1,4 +1,4 @@
 ﻿namespace Shared.DataTransferObjects
 {
-    public record WorkerForCreationDto(string FirstName, string LastName);
+    public record WorkerForCreationDto(string FirstName, string LastName, ICollection<DepartmentForCreationDto> Departments);
 }

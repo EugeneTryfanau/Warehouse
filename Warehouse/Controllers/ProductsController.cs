@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using System.ComponentModel.Design;
 
 namespace Warehouse.Controllers
 {
@@ -22,7 +23,7 @@ namespace Warehouse.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{productId:guid}", Name = "ProductById")]
+        [HttpGet("{productId:guid}", Name = "GetDepartmentProduct")]
         public IActionResult GetDepartmentProduct(Guid departmentId, Guid productId)
         {
             var product = _serviceManager.ProductService.GetProduct(departmentId, productId);
@@ -36,7 +37,8 @@ namespace Warehouse.Controllers
                 return BadRequest("ProductForCreationDto object is null");
 
             var productToReturn = _serviceManager.ProductService.CreateProduct(departmentId, productForCreationDto);
-            return CreatedAtRoute("ProductById", productToReturn);
+            return CreatedAtRoute("GetDepartmentProduct", new { departmentId, productId = productToReturn.Id }, productToReturn);
+
         }
 
         [HttpPut("{productId:guid}")]

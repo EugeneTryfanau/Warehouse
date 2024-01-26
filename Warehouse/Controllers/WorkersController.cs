@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using System.ComponentModel.Design;
 
 namespace Warehouse.Controllers
 {
@@ -22,7 +23,7 @@ namespace Warehouse.Controllers
             return Ok(workers);
         }
 
-        [HttpGet("{workerId:guid}", Name = "WorkerById")]
+        [HttpGet("{workerId:guid}", Name = "GetWorker")]
         public IActionResult GetWorker(Guid workerId)
         {
             var worker = _serviceManager.WorkerService.GetWorker(workerId);
@@ -35,7 +36,7 @@ namespace Warehouse.Controllers
                 return BadRequest("WorkerForCreationDto object is null");
 
             var createdWorker = _serviceManager.WorkerService.CreateWorker(workerForCreationDto);
-            return CreatedAtRoute("WorkerById", createdWorker);
+            return CreatedAtRoute("GetWorker", new { workerId = createdWorker.Id }, createdWorker);
         }
 
         [HttpPut("workerId:guid")]

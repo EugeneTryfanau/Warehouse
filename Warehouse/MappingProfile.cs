@@ -9,22 +9,16 @@ namespace Warehouse
         public MappingProfile()
         {
             CreateMap<Department, DepartmentDto>();
-            CreateMap<Department, DepartmentForCreationDto>();
-            CreateMap<DepartmentForCreationDto, Department>();
-            CreateMap<Department, DepartmentForUpdateDto>();
-            CreateMap<DepartmentForUpdateDto, Department>();
+            CreateMap<Department, DepartmentForCreationDto>().ReverseMap();
+            CreateMap<Department, DepartmentForUpdateDto>().ReverseMap();
 
             CreateMap<Worker, WorkerDto>();
-            CreateMap<Worker, WorkerForCreationDto>();
-            CreateMap<WorkerForCreationDto, Worker>();
-            CreateMap<Worker, WorkerForUpdateDto>();
-            CreateMap<WorkerForUpdateDto, Worker>();
+            CreateMap<Worker, WorkerForCreationDto>().ReverseMap();
+            CreateMap<Worker, WorkerForUpdateDto>().ReverseMap();
 
             CreateMap<Product, ProductDto>();
-            CreateMap<Product, ProductForCreationDto>();
-            CreateMap<ProductForCreationDto, Product>();
-            CreateMap<Product, ProductForUpdateDto>();
-            CreateMap<ProductForUpdateDto, Product>();
+            CreateMap<Product, ProductForCreationDto>().ReverseMap();
+            CreateMap<Product, ProductForUpdateDto>().ReverseMap();
         }
     }
 }

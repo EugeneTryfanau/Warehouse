@@ -69,5 +69,21 @@ namespace Service
             _repositoryManager.Department.DeleteDepartment(department);
             _repositoryManager.Save();
         }
+
+        public (DepartmentForUpdateDto departmentToPatch, Department departmentEntity) GetDepartmentForPatch(Guid departmentId)
+        {
+            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            if (department is null)
+                throw new DepartmentNotFoundException(departmentId);
+
+            var departmentToPatch = _mapper.Map<DepartmentForUpdateDto>(department);
+            return (departmentToPatch, department);
+        }
+
+        public void SaveChangesForPatch(DepartmentForUpdateDto departmentToPatch, Department departmentEntity)
+        {
+            _mapper.Map(departmentToPatch, departmentEntity);
+            _repositoryManager.Save();
+        }
     }
 }

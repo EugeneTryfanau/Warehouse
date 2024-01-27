@@ -1,4 +1,4 @@
-﻿using Entities.Models;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -52,6 +52,19 @@ namespace Warehouse.Controllers
         {
             _serviceManager.DepartmentService.DeleteDepartment(departmentId);
             return Ok();
+        }
+
+        [HttpPatch("{departmentId:guid}")]
+        public IActionResult PartiallyUpdateDepartment(Guid departmentId, [FromBody] JsonPatchDocument<DepartmentForUpdateDto> patchDoc)
+        {
+            if (patchDoc is null)
+                return BadRequest("patchDoc object sent from client is null.");
+
+            var result = _serviceManager.DepartmentService.GetDepartmentForPatch(departmentId);
+            patchDoc.ApplyTo(result.departmentToPatch);
+
+            _serviceManager.DepartmentService.SaveChangesForPatch(result.departmentToPatch, result.departmentEntity);
+            return NoContent();
         }
     }
 }

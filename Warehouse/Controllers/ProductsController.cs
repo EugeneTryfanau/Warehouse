@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.ComponentModel.Design;
 
 namespace Warehouse.Controllers
 {
@@ -31,7 +31,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateEmployeeForCompany(Guid departmentId, [FromBody] ProductForCreationDto productForCreationDto)
+        public IActionResult CreateDepartmentProduct(Guid departmentId, [FromBody] ProductForCreationDto productForCreationDto)
         {
             if (productForCreationDto is null)
                 return BadRequest("ProductForCreationDto object is null");
@@ -42,21 +42,33 @@ namespace Warehouse.Controllers
         }
 
         [HttpPut("{productId:guid}")]
-        public IActionResult UpdateEmployeeForCompany(Guid departmentId, Guid productId, [FromBody] ProductForUpdateDto productForUpdateDto)
+        public IActionResult UpdateDepartmentProduct(Guid departmentId, Guid productId, [FromBody] ProductForUpdateDto productForUpdateDto)
         {
             if (productForUpdateDto is null)
-                return BadRequest("EmployeeForUpdateDto object is null");
+                return BadRequest("ProductForUpdateDto object is null");
 
             _serviceManager.ProductService.UpdateProduct(departmentId, productId, productForUpdateDto);
             return NoContent();
         }
 
         [HttpDelete("{productId:guid}")]
-        public IActionResult DeleteEmployeeForCompany(Guid departmentId, Guid productId)
+        public IActionResult DeleteDepartmentProducty(Guid departmentId, Guid productId)
         {
             _serviceManager.ProductService.DeleteProduct(departmentId, productId);
             return NoContent();
         }
 
+        [HttpPatch("{productId:guid}")]
+        public IActionResult PartiallyUpdateDepartmentProduct(Guid departmentId, Guid productId, [FromBody] JsonPatchDocument<ProductForUpdateDto> patchDoc)
+        {
+            if (patchDoc is null)
+                return BadRequest("patchDoc object sent from client is null.");
+
+            var result = _serviceManager.ProductService.GetProductForPatch(departmentId, productId);
+            patchDoc.ApplyTo(result.productToPatch);
+
+            _serviceManager.ProductService.SaveChangesForPatch(result.productToPatch, result.productEntity);
+            return NoContent();
+        }
     }
 }

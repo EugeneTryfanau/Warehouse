@@ -87,5 +87,25 @@ namespace Service
             _repositoryManager.Product.DeleteProduct(product);
             _repositoryManager.Save();
         }
+
+        public (ProductForUpdateDto productToPatch, Product productEntity) GetProductForPatch(Guid departmentId, Guid productId)
+        {
+            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            if (department is null)
+                throw new DepartmentNotFoundException(departmentId);
+
+            var product = _repositoryManager.Product.GetProduct(departmentId, productId);
+            if (product is null)
+                throw new ProductNotFoundException(productId);
+
+            var productToPatch = _mapper.Map<ProductForUpdateDto>(product);
+            return (productToPatch, product);
+        }
+
+        public void SaveChangesForPatch(ProductForUpdateDto productToPatch, Product productEntity)
+        {
+            _mapper.Map(productToPatch, productEntity);
+            _repositoryManager.Save();
+        }
     }
 }

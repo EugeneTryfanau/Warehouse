@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.ComponentModel.Design;
 
 namespace Warehouse.Controllers
 {
@@ -52,6 +52,19 @@ namespace Warehouse.Controllers
         {
             _serviceManager.WorkerService.DeleteWorker(workerId);
             return Ok();
+        }
+
+        [HttpPatch("{workerId:guid}")]
+        public IActionResult PartiallyUpdateWorker(Guid workerId, [FromBody] JsonPatchDocument<WorkerForUpdateDto> patchDoc)
+        {
+            if (patchDoc is null)
+                return BadRequest("patchDoc object sent from client is null.");
+
+            var result = _serviceManager.WorkerService.GetWorkerForPatch(workerId);
+            patchDoc.ApplyTo(result.workerToPatch);
+
+            _serviceManager.WorkerService.SaveChangesForPatch(result.workerToPatch, result.workerEntity);
+            return NoContent();
         }
     }
 }

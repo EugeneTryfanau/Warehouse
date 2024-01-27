@@ -1,4 +1,5 @@
-﻿using Shared.DataTransferObjects;
+﻿using Entities.Models;
+using Shared.DataTransferObjects;
 
 namespace Service.Contracts
 {
@@ -9,5 +10,8 @@ namespace Service.Contracts
         DepartmentDto CreateDepartment(DepartmentForCreationDto departmentForCreationDto);
         void UpdateDepartment(Guid departmentId, DepartmentForUpdateDto departmentForUpdateDto);
         void DeleteDepartment(Guid departmentId);
+
+        (DepartmentForUpdateDto departmentToPatch, Department departmentEntity) GetDepartmentForPatch(Guid departmentId);
+        void SaveChangesForPatch(DepartmentForUpdateDto departmentToPatch, Department departmentEntity);
     }
 }

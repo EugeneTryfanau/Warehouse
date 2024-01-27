@@ -66,5 +66,21 @@ namespace Service
             _repositoryManager.Worker.DeleteWorker(worker);
             _repositoryManager.Save();
         }
+
+        public (WorkerForUpdateDto workerToPatch, Worker workerEntity) GetWorkerForPatch(Guid workerId)
+        {
+            var worker = _repositoryManager.Worker.GetWorker(workerId);
+            if (worker is null)
+                throw new WorkerNotFoundException(workerId);
+
+            var workerToPatch = _mapper.Map<WorkerForUpdateDto>(worker);
+            return (workerToPatch, worker);
+        }
+
+        public void SaveChangesForPatch(WorkerForUpdateDto workerToPatch, Worker workerEntity)
+        {
+            _mapper.Map(workerToPatch, workerEntity);
+            _repositoryManager.Save();
+        }
     }
 }

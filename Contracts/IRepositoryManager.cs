@@ -6,6 +6,6 @@
         IWorkerRepository Worker { get; }
         IProductRepository Product { get; }
 
-        void Save();
+        Task SaveAsync();
     }
 }

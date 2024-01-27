@@ -5,13 +5,13 @@ namespace Service.Contracts
 {
     public interface IDepartmentService
     {
-        IEnumerable<DepartmentDto> GetAllDepartments();
-        DepartmentDto GetDepartment(Guid departmentId);
-        DepartmentDto CreateDepartment(DepartmentForCreationDto departmentForCreationDto);
-        void UpdateDepartment(Guid departmentId, DepartmentForUpdateDto departmentForUpdateDto);
-        void DeleteDepartment(Guid departmentId);
+        Task<IEnumerable<DepartmentDto>> GetAllDepartmentsAsync();
+        Task<DepartmentDto> GetDepartmentAsync(Guid departmentId);
+        Task<DepartmentDto> CreateDepartmentAsync(DepartmentForCreationDto departmentForCreationDto);
+        Task UpdateDepartmentAsync(Guid departmentId, DepartmentForUpdateDto departmentForUpdateDto);
+        Task DeleteDepartmentAsync(Guid departmentId);
 
-        (DepartmentForUpdateDto departmentToPatch, Department departmentEntity) GetDepartmentForPatch(Guid departmentId);
-        void SaveChangesForPatch(DepartmentForUpdateDto departmentToPatch, Department departmentEntity);
+        Task<(DepartmentForUpdateDto departmentToPatch, Department departmentEntity)> GetDepartmentForPatchAsync(Guid departmentId);
+        Task SaveChangesForPatchAsync(DepartmentForUpdateDto departmentToPatch, Department departmentEntity);
     }
 }

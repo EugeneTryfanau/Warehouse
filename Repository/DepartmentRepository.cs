@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -12,14 +13,14 @@ namespace Repository
             Create(department);
         }
 
-        public IEnumerable<Department> GetAllDepartments()
+        public async Task<IEnumerable<Department>> GetAllDepartmentsAsync()
         {
-            return GetAll().OrderBy(d => d.Name).ToList();
+            return await GetAll(includeProperties: "Products").OrderBy(d => d.Name).ToListAsync();
         }
 
-        public Department? GetDepartment(Guid departmentId)
+        public async Task<Department?> GetDepartmentAsync(Guid departmentId)
         {
-            return GetByCondition(d => d.Id.Equals(departmentId)).SingleOrDefault();
+            return await GetByCondition(d => d.Id.Equals(departmentId), includeProperties: "Products").SingleOrDefaultAsync();
         }
 
         public void UpdateDepartment(Department department)

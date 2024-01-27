@@ -9,8 +9,8 @@ namespace Entities.Models
 
         public required string Name { get; set; }
 
-        public ICollection<Product>? Products { get; set; }
+        public virtual ICollection<Product>? Products { get; set; }
 
-        public ICollection<Worker>? Workers { get; set; }
+        public virtual ICollection<Worker>? Workers { get; set; }
     }
 }

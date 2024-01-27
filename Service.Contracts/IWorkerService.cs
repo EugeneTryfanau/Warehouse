@@ -5,13 +5,13 @@ namespace Service.Contracts
 {
     public interface IWorkerService
     {
-        IEnumerable<WorkerDto> GetAllWorkers();
-        WorkerDto GetWorker(Guid workerId);
-        WorkerDto CreateWorker(WorkerForCreationDto workerForCreationDto);
-        void UpdateWorker(Guid workerId, WorkerForUpdateDto workerForUpdateDto);
-        void DeleteWorker(Guid workerId);
+        Task<IEnumerable<WorkerDto>> GetAllWorkersAsync();
+        Task<WorkerDto> GetWorkerAsync(Guid workerId);
+        Task<WorkerDto> CreateWorkerAsync(WorkerForCreationDto workerForCreationDto);
+        Task UpdateWorkerAsync(Guid workerId, WorkerForUpdateDto workerForUpdateDto);
+        Task DeleteWorkerAsync(Guid workerId);
 
-        (WorkerForUpdateDto workerToPatch, Worker workerEntity) GetWorkerForPatch(Guid workerId);
-        void SaveChangesForPatch(WorkerForUpdateDto workerToPatch, Worker workerEntity);
+        Task<(WorkerForUpdateDto workerToPatch, Worker workerEntity)> GetWorkerForPatchAsync(Guid workerId);
+        Task SaveChangesForPatchAsync(WorkerForUpdateDto workerToPatch, Worker workerEntity);
     }
 }

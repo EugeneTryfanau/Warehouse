@@ -17,53 +17,53 @@ namespace Warehouse.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDWorkers()
+        public async Task<IActionResult> GetDWorkers()
         {
-            var workers = _serviceManager.WorkerService.GetAllWorkers();
+            var workers = await _serviceManager.WorkerService.GetAllWorkersAsync();
             return Ok(workers);
         }
 
         [HttpGet("{workerId:guid}", Name = "GetWorker")]
-        public IActionResult GetWorker(Guid workerId)
+        public async Task<IActionResult> GetWorker(Guid workerId)
         {
-            var worker = _serviceManager.WorkerService.GetWorker(workerId);
+            var worker = await _serviceManager.WorkerService.GetWorkerAsync(workerId);
             return Ok(worker);
         }
         [HttpPost]
-        public IActionResult CreateWorker([FromBody] WorkerForCreationDto workerForCreationDto)
+        public async Task<IActionResult> CreateWorker([FromBody] WorkerForCreationDto workerForCreationDto)
         {
             if (workerForCreationDto is null)
                 return BadRequest("WorkerForCreationDto object is null");
 
-            var createdWorker = _serviceManager.WorkerService.CreateWorker(workerForCreationDto);
+            var createdWorker = await _serviceManager.WorkerService.CreateWorkerAsync(workerForCreationDto);
             return CreatedAtRoute("GetWorker", new { workerId = createdWorker.Id }, createdWorker);
         }
 
         [HttpPut("workerId:guid")]
-        public IActionResult UpdateWorker(Guid workerId, [FromBody] WorkerForUpdateDto workerForUpdateDto)
+        public async Task<IActionResult> UpdateWorker(Guid workerId, [FromBody] WorkerForUpdateDto workerForUpdateDto)
         {
             if (workerForUpdateDto is null)
-                return BadRequest("WorkerForUpdateDto object is null");            _serviceManager.WorkerService.UpdateWorker(workerId, workerForUpdateDto);
+                return BadRequest("WorkerForUpdateDto object is null");            await _serviceManager.WorkerService.UpdateWorkerAsync(workerId, workerForUpdateDto);
             return NoContent();
         }
 
         [HttpDelete("workerId:guid")]
-        public IActionResult DeleteWorker(Guid workerId)
+        public async Task<IActionResult> DeleteWorker(Guid workerId)
         {
-            _serviceManager.WorkerService.DeleteWorker(workerId);
+            await _serviceManager.WorkerService.DeleteWorkerAsync(workerId);
             return Ok();
         }
 
         [HttpPatch("{workerId:guid}")]
-        public IActionResult PartiallyUpdateWorker(Guid workerId, [FromBody] JsonPatchDocument<WorkerForUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiallyUpdateWorker(Guid workerId, [FromBody] JsonPatchDocument<WorkerForUpdateDto> patchDoc)
         {
             if (patchDoc is null)
                 return BadRequest("patchDoc object sent from client is null.");
 
-            var result = _serviceManager.WorkerService.GetWorkerForPatch(workerId);
+            var result = await _serviceManager.WorkerService.GetWorkerForPatchAsync(workerId);
             patchDoc.ApplyTo(result.workerToPatch);
 
-            _serviceManager.WorkerService.SaveChangesForPatch(result.workerToPatch, result.workerEntity);
+            await _serviceManager.WorkerService.SaveChangesForPatchAsync(result.workerToPatch, result.workerEntity);
             return NoContent();
         }
     }

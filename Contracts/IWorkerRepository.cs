@@ -4,8 +4,8 @@ namespace Contracts
 {
     public interface IWorkerRepository
     {
-        IEnumerable<Worker> GetAllWorkers();
-        Worker? GetWorker(Guid workerId);
+        Task<IEnumerable<Worker>> GetAllWorkersAsync();
+        Task<Worker?> GetWorkerAsync(Guid workerId);
         void CreateWorker(Worker worker);
         void UpdateWorker(Worker worker);
         void DeleteWorker(Worker worker);

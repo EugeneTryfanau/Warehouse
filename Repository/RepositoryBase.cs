@@ -1,5 +1,8 @@
 ﻿using Contracts;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Repository
 {
@@ -17,14 +20,26 @@ namespace Repository
             RepositoryContext.Set<T>().Add(entity);
         }
 
-        public IQueryable<T> GetAll()
+        public IQueryable<T> GetAll(string includeProperties = "")
         {
-            return RepositoryContext.Set<T>();
+            IQueryable<T> query = RepositoryContext.Set<T>();
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            return query;
         }
 
-        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
+        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression, string includeProperties = "")
         {
-            return RepositoryContext.Set<T>().Where(expression);
+            IQueryable<T> query = RepositoryContext.Set<T>().Where(expression);
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            return query;
         }
 
         public void Update(T entity)

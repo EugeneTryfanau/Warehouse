@@ -5,14 +5,14 @@ namespace Service.Contracts
 {
     public interface IProductService
     {
-        IEnumerable<ProductDto> GetAllProducts(Guid departmentId);
-        ProductDto GetProduct(Guid departmentId, Guid productId);
-        ProductDto CreateProduct(Guid departmentId, ProductForCreationDto productForCreationDto);
-        void UpdateProduct(Guid departmentId, Guid productId, ProductForUpdateDto productForUpdateDto);
-        void DeleteProduct(Guid departmentId, Guid productId);
+        Task<IEnumerable<ProductDto>> GetAllProductsAsync(Guid departmentId);
+        Task<ProductDto> GetProductAsync(Guid departmentId, Guid productId);
+        Task<ProductDto> CreateProductAsync(Guid departmentId, ProductForCreationDto productForCreationDto);
+        Task UpdateProductAsync(Guid departmentId, Guid productId, ProductForUpdateDto productForUpdateDto);
+        Task DeleteProductAsync(Guid departmentId, Guid productId);
 
-        (ProductForUpdateDto productToPatch, Product productEntity) GetProductForPatch(Guid departmentId, Guid productId);
-        void SaveChangesForPatch(ProductForUpdateDto productToPatch, Product productEntity);
+        Task<(ProductForUpdateDto productToPatch, Product productEntity)> GetProductForPatchAsync(Guid departmentId, Guid productId);
+        Task SaveChangesForPatchAsync(ProductForUpdateDto productToPatch, Product productEntity);
 
     }
 }

@@ -22,57 +22,57 @@ namespace Service
             _mapper = mapper;
         }
 
-        public DepartmentDto CreateDepartment(DepartmentForCreationDto departmentForCreationDto)
+        public async Task<DepartmentDto> CreateDepartmentAsync(DepartmentForCreationDto departmentForCreationDto)
         {
             var department = _mapper.Map<Department>(departmentForCreationDto);
 
             _repositoryManager.Department.CreateDepartment(department);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
 
             var departmentDto = _mapper.Map<DepartmentDto>(department);
             return departmentDto;
         }
 
-        public IEnumerable<DepartmentDto> GetAllDepartments()
+        public async Task<IEnumerable<DepartmentDto>> GetAllDepartmentsAsync()
         {
-            var departments = _repositoryManager.Department.GetAllDepartments();
+            var departments = await _repositoryManager.Department.GetAllDepartmentsAsync();
             var departmentsDto = _mapper.Map<IEnumerable<DepartmentDto>>(departments);
 
             return departmentsDto;
         }
 
-        public DepartmentDto GetDepartment(Guid departmentId)
+        public async Task<DepartmentDto> GetDepartmentAsync(Guid departmentId)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
             var departmenrDto = _mapper.Map<DepartmentDto>(department);
             return departmenrDto;
         }
 
-        public void UpdateDepartment(Guid departmentId, DepartmentForUpdateDto departmentForUpdateDto)
+        public async Task UpdateDepartmentAsync(Guid departmentId, DepartmentForUpdateDto departmentForUpdateDto)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
             _mapper.Map(departmentForUpdateDto, department);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
 
-        public void DeleteDepartment(Guid departmentId)
+        public async Task DeleteDepartmentAsync(Guid departmentId)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
             _repositoryManager.Department.DeleteDepartment(department);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
 
-        public (DepartmentForUpdateDto departmentToPatch, Department departmentEntity) GetDepartmentForPatch(Guid departmentId)
+        public async Task<(DepartmentForUpdateDto departmentToPatch, Department departmentEntity)> GetDepartmentForPatchAsync(Guid departmentId)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
@@ -80,10 +80,10 @@ namespace Service
             return (departmentToPatch, department);
         }
 
-        public void SaveChangesForPatch(DepartmentForUpdateDto departmentToPatch, Department departmentEntity)
+        public async Task SaveChangesForPatchAsync(DepartmentForUpdateDto departmentToPatch, Department departmentEntity)
         {
             _mapper.Map(departmentToPatch, departmentEntity);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
     }
 }

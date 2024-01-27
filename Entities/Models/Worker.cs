@@ -11,6 +11,6 @@ namespace Entities.Models
 
         public required string LastName { get; set; }
 
-        public ICollection<Department>? Departments { get; set; }
+        public virtual ICollection<Department>? Departments { get; set; }
     }
 }

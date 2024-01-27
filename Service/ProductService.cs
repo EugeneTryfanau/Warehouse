@@ -21,38 +21,38 @@ namespace Service
             _mapper = mapper;
         }
 
-        public ProductDto CreateProduct(Guid departmentId, ProductForCreationDto productForCreationDto)
+        public async Task<ProductDto> CreateProductAsync(Guid departmentId, ProductForCreationDto productForCreationDto)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
             var productEntity = _mapper.Map<Product>(productForCreationDto);
             _repositoryManager.Product.CreateProduct(departmentId, productEntity);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
 
             var employeeToReturn = _mapper.Map<ProductDto>(productEntity);
             return employeeToReturn;
         }
 
-        public IEnumerable<ProductDto> GetAllProducts(Guid departmentId)
+        public async Task<IEnumerable<ProductDto>> GetAllProductsAsync(Guid departmentId)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            var productFromDb = _repositoryManager.Product.GetAllProducts(departmentId);
+            var productFromDb = await _repositoryManager.Product.GetAllProductsAsync(departmentId);
             var productDto = _mapper.Map<IEnumerable<ProductDto>>(productFromDb);
             return productDto;
         }
 
-        public ProductDto GetProduct(Guid departmentId, Guid productId)
+        public async Task<ProductDto> GetProductAsync(Guid departmentId, Guid productId)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            var productFromDb = _repositoryManager.Product.GetProduct(departmentId, productId);
+            var productFromDb = await _repositoryManager.Product.GetProductAsync(departmentId, productId);
             if (productFromDb is null)
                 throw new ProductNotFoundException(productId);
 
@@ -60,41 +60,41 @@ namespace Service
             return productDto;
         }
 
-        public void UpdateProduct(Guid departmentId, Guid productId, ProductForUpdateDto productForUpdateDto)
+        public async Task UpdateProductAsync(Guid departmentId, Guid productId, ProductForUpdateDto productForUpdateDto)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            var productEntity = _repositoryManager.Product.GetProduct(departmentId, productId);
+            var productEntity = await _repositoryManager.Product.GetProductAsync(departmentId, productId);
             if (productEntity is null)
                 throw new ProductNotFoundException(productId);
 
             _mapper.Map(productForUpdateDto, productEntity);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
 
-        public void DeleteProduct(Guid departmentId, Guid productId)
+        public async Task DeleteProductAsync(Guid departmentId, Guid productId)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            var product = _repositoryManager.Product.GetProduct(departmentId, productId);
+            var product = await _repositoryManager.Product.GetProductAsync(departmentId, productId);
             if (product is null)
                 throw new ProductNotFoundException(productId);
 
             _repositoryManager.Product.DeleteProduct(product);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
 
-        public (ProductForUpdateDto productToPatch, Product productEntity) GetProductForPatch(Guid departmentId, Guid productId)
+        public async Task<(ProductForUpdateDto productToPatch, Product productEntity)> GetProductForPatchAsync(Guid departmentId, Guid productId)
         {
-            var department = _repositoryManager.Department.GetDepartment(departmentId);
+            var department = await _repositoryManager.Department.GetDepartmentAsync(departmentId);
             if (department is null)
                 throw new DepartmentNotFoundException(departmentId);
 
-            var product = _repositoryManager.Product.GetProduct(departmentId, productId);
+            var product = await _repositoryManager.Product.GetProductAsync(departmentId, productId);
             if (product is null)
                 throw new ProductNotFoundException(productId);
 
@@ -102,10 +102,10 @@ namespace Service
             return (productToPatch, product);
         }
 
-        public void SaveChangesForPatch(ProductForUpdateDto productToPatch, Product productEntity)
+        public async Task SaveChangesForPatchAsync(ProductForUpdateDto productToPatch, Product productEntity)
         {
             _mapper.Map(productToPatch, productEntity);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
     }
 }

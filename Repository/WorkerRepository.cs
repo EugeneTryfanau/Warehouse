@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -17,14 +18,14 @@ namespace Repository
             Delete(worker);
         }
 
-        public IEnumerable<Worker> GetAllWorkers()
+        public async Task<IEnumerable<Worker>> GetAllWorkersAsync()
         {
-            return GetAll().OrderBy(w => w.LastName).ToList();
+            return await GetAll().OrderBy(w => w.LastName).ToListAsync();
         }
 
-        public Worker? GetWorker(Guid workerId)
+        public async Task<Worker?> GetWorkerAsync(Guid workerId)
         {
-            return GetByCondition(w => w.Id.Equals(workerId)).SingleOrDefault();
+            return await GetByCondition(w => w.Id.Equals(workerId)).SingleOrDefaultAsync();
         }
 
         public void UpdateWorker(Worker worker)

@@ -21,55 +21,55 @@ namespace Service
             _mapper = mapper;
         }
 
-        public WorkerDto CreateWorker(WorkerForCreationDto workerForCreationDto)
+        public async Task<WorkerDto> CreateWorkerAsync(WorkerForCreationDto workerForCreationDto)
         {
             var worker = _mapper.Map<Worker>(workerForCreationDto);
 
             _repositoryManager.Worker.CreateWorker(worker);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
 
             var workerDto = _mapper.Map<WorkerDto>(worker);
             return workerDto;
         }
 
-        public IEnumerable<WorkerDto> GetAllWorkers()
+        public async Task<IEnumerable<WorkerDto>> GetAllWorkersAsync()
         {
-            var workers = _repositoryManager.Worker.GetAllWorkers();
+            var workers = await _repositoryManager.Worker.GetAllWorkersAsync();
             var workersDto = _mapper.Map<IEnumerable<WorkerDto>>(workers);
 
             return workersDto;
         }
 
-        public WorkerDto GetWorker(Guid workerId)
+        public async Task<WorkerDto> GetWorkerAsync(Guid workerId)
         {
-            var worker = _repositoryManager.Worker.GetWorker(workerId);
+            var worker = await _repositoryManager.Worker.GetWorkerAsync(workerId);
             if (worker is null)
                 throw new WorkerNotFoundException(workerId);
             var workerDto = _mapper.Map<WorkerDto>(worker);
             return workerDto;
         }
 
-        public void UpdateWorker(Guid workerId, WorkerForUpdateDto workerForUpdateDto)
+        public async Task UpdateWorkerAsync(Guid workerId, WorkerForUpdateDto workerForUpdateDto)
         {
-            var worker = _repositoryManager.Worker.GetWorker(workerId);
+            var worker = await _repositoryManager.Worker.GetWorkerAsync(workerId);
             if (worker is null)
                 throw new WorkerNotFoundException(workerId);
             _mapper.Map(workerForUpdateDto, worker);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
 
-        public void DeleteWorker(Guid workerId)
+        public async Task DeleteWorkerAsync(Guid workerId)
         {
-            var worker = _repositoryManager.Worker.GetWorker(workerId);
+            var worker = await _repositoryManager.Worker.GetWorkerAsync(workerId);
             if (worker is null)
                 throw new WorkerNotFoundException(workerId);
             _repositoryManager.Worker.DeleteWorker(worker);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
 
-        public (WorkerForUpdateDto workerToPatch, Worker workerEntity) GetWorkerForPatch(Guid workerId)
+        public async Task<(WorkerForUpdateDto workerToPatch, Worker workerEntity)> GetWorkerForPatchAsync(Guid workerId)
         {
-            var worker = _repositoryManager.Worker.GetWorker(workerId);
+            var worker = await _repositoryManager.Worker.GetWorkerAsync(workerId);
             if (worker is null)
                 throw new WorkerNotFoundException(workerId);
 
@@ -77,10 +77,10 @@ namespace Service
             return (workerToPatch, worker);
         }
 
-        public void SaveChangesForPatch(WorkerForUpdateDto workerToPatch, Worker workerEntity)
+        public async Task SaveChangesForPatchAsync(WorkerForUpdateDto workerToPatch, Worker workerEntity)
         {
             _mapper.Map(workerToPatch, workerEntity);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
     }
 }

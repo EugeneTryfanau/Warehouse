@@ -1,6 +1,4 @@
-﻿using Entities.Models;
-
-namespace Shared.DataTransferObjects
+﻿namespace Shared.DataTransferObjects
 {
-    public record WorkerDto(Guid Id, string FirstName, string LastName, ICollection<Department>? Departments);
+    public record WorkerDto(Guid Id, string FirstName, string LastName, ICollection<DepartmentDto>? Departments);
 }

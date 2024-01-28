@@ -17,7 +17,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDWorkers()
+        public async Task<IActionResult> GetWorkers()
         {
             var workers = await _serviceManager.WorkerService.GetAllWorkersAsync();
             return Ok(workers);

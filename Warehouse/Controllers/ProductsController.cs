@@ -52,7 +52,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpDelete("{productId:guid}")]
-        public async Task<IActionResult> DeleteDepartmentProducty(Guid departmentId, Guid productId)
+        public async Task<IActionResult> DeleteDepartmentProduct(Guid departmentId, Guid productId)
         {
             await _serviceManager.ProductService.DeleteProductAsync(departmentId, productId);
             return NoContent();

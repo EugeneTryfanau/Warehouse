@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Contracts", "Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{F01A8C59-7B4B-4755-A151-868FFC7CCD6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseTests", "WarehouseTests\WarehouseTests.csproj", "{53E49D98-4FD1-471A-95F4-3EECB00B34D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseTests", "WarehouseTests\WarehouseTests.csproj", "{53E49D98-4FD1-471A-95F4-3EECB00B34D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

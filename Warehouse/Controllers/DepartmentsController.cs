@@ -31,7 +31,7 @@ namespace Warehouse.Controllers
             return Ok(department);
         }
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> CreateDepartment([FromBody] DepartmentForCreationDto departmentForCreationDto)
         {
             if (departmentForCreationDto is null)
@@ -42,7 +42,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPut("departmentId:guid")]
-        [Authorize]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> UpdateDepartment(Guid departmentId, [FromBody] DepartmentForUpdateDto departmentForUpdateDto)
         {
             if (departmentForUpdateDto is null)
@@ -51,7 +51,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpDelete("departmentId:guid")]
-        [Authorize]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> DeleteDepartment(Guid departmentId)
         {
             await _serviceManager.DepartmentService.DeleteDepartmentAsync(departmentId);
@@ -59,7 +59,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPatch("{departmentId:guid}")]
-        [Authorize]
+        [Authorize(Roles = "Administrator, Manager")]
         public async Task<IActionResult> PartiallyUpdateDepartment(Guid departmentId, [FromBody] JsonPatchDocument<DepartmentForUpdateDto> patchDoc)
         {
             if (patchDoc is null)

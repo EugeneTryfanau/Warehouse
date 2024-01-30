@@ -19,6 +19,8 @@ namespace Warehouse
             CreateMap<Product, ProductDto>();
             CreateMap<Product, ProductForCreationDto>().ReverseMap();
             CreateMap<Product, ProductForUpdateDto>().ReverseMap();
+
+            CreateMap<UserForRegistrationDto, User>().ReverseMap();
         }
     }
 }

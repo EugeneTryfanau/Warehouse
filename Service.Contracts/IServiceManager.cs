@@ -5,5 +5,6 @@
         IDepartmentService DepartmentService { get; }
         IWorkerService WorkerService { get; }
         IProductService ProductService { get; }
+        IAuthenticationService AuthenticationService { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -30,6 +31,7 @@ namespace Warehouse.Controllers
             return Ok(department);
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateDepartment([FromBody] DepartmentForCreationDto departmentForCreationDto)
         {
             if (departmentForCreationDto is null)
@@ -40,6 +42,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPut("departmentId:guid")]
+        [Authorize]
         public async Task<IActionResult> UpdateDepartment(Guid departmentId, [FromBody] DepartmentForUpdateDto departmentForUpdateDto)
         {
             if (departmentForUpdateDto is null)
@@ -48,6 +51,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpDelete("departmentId:guid")]
+        [Authorize]
         public async Task<IActionResult> DeleteDepartment(Guid departmentId)
         {
             await _serviceManager.DepartmentService.DeleteDepartmentAsync(departmentId);
@@ -55,6 +59,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPatch("{departmentId:guid}")]
+        [Authorize]
         public async Task<IActionResult> PartiallyUpdateDepartment(Guid departmentId, [FromBody] JsonPatchDocument<DepartmentForUpdateDto> patchDoc)
         {
             if (patchDoc is null)

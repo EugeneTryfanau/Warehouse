@@ -32,7 +32,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
-        [Authorize("read:messages", Roles = "Administrator, Manager")]
+        [Authorize("create:actions", Roles = "Administrator, Manager")]
         public async Task<IActionResult> CreateDepartmentProduct(Guid departmentId, [FromBody] ProductForCreationDto productForCreationDto)
         {
             if (productForCreationDto is null)
@@ -44,7 +44,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPut("{productId:guid}")]
-        [Authorize("read:messages", Roles = "Administrator, Manager")]
+        [Authorize("update:actions", Roles = "Administrator, Manager")]
         public async Task<IActionResult> UpdateDepartmentProduct(Guid departmentId, Guid productId, [FromBody] ProductForUpdateDto productForUpdateDto)
         {
             if (productForUpdateDto is null)
@@ -55,7 +55,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpDelete("{productId:guid}")]
-        [Authorize("read:messages", Roles = "Administrator, Manager")]
+        [Authorize("delete:actions", Roles = "Administrator, Manager")]
         public async Task<IActionResult> DeleteDepartmentProduct(Guid departmentId, Guid productId)
         {
             await _serviceManager.ProductService.DeleteProductAsync(departmentId, productId);
@@ -63,7 +63,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPatch("{productId:guid}")]
-        [Authorize("read:messages", Roles = "Administrator, Manager")]
+        [Authorize("update:actions", Roles = "Administrator, Manager")]
         public async Task<IActionResult> PartiallyUpdateDepartmentProduct(Guid departmentId, Guid productId, [FromBody] JsonPatchDocument<ProductForUpdateDto> patchDoc)
         {
             if (patchDoc is null)

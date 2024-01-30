@@ -76,8 +76,12 @@ namespace Warehouse.Extensions
             var domain = $"https://{jwtSettings["Auth0:Domain"]}/";
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("read:messages", policy => policy.Requirements.Add(new
-                HasScopeRequirement("read:messages", domain)));
+                options.AddPolicy("create:actions", policy => policy.Requirements.Add(new
+                    HasScopeRequirement("create:actions", domain)));
+                options.AddPolicy("update:actions", policy => policy.Requirements.Add(new
+                    HasScopeRequirement("update:actions", domain)));
+                options.AddPolicy("delete:actions", policy => policy.Requirements.Add(new
+                    HasScopeRequirement("delete:actions", domain)));
             });
 
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();

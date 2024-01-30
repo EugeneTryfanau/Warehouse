@@ -32,6 +32,7 @@ namespace Warehouse.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Administrator")]
+        [Authorize("read:messages", Roles = "Administrator")]
         public async Task<IActionResult> CreateWorker([FromBody] WorkerForCreationDto workerForCreationDto)
         {
             if (workerForCreationDto is null)
@@ -42,7 +43,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPut("workerId:guid")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize("read:messages", Roles = "Administrator")]
         public async Task<IActionResult> UpdateWorker(Guid workerId, [FromBody] WorkerForUpdateDto workerForUpdateDto)
         {
             if (workerForUpdateDto is null)
@@ -51,7 +52,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpDelete("workerId:guid")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize("read:messages", Roles = "Administrator")]
         public async Task<IActionResult> DeleteWorker(Guid workerId)
         {
             await _serviceManager.WorkerService.DeleteWorkerAsync(workerId);
@@ -59,7 +60,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPatch("{workerId:guid}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize("read:messages", Roles = "Administrator")]
         public async Task<IActionResult> PartiallyUpdateWorker(Guid workerId, [FromBody] JsonPatchDocument<WorkerForUpdateDto> patchDoc)
         {
             if (patchDoc is null)

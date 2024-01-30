@@ -4,7 +4,7 @@ using Shared.DataTransferObjects;
 
 namespace Warehouse.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -37,11 +37,9 @@ namespace Warehouse.Controllers
         {
             if (!await _service.AuthenticationService.ValidateUser(user))
                 return Unauthorized();
-            return Ok(new
-            {
-                Token = await _service.AuthenticationService.CreateToken()
-            });
+            var tokenDto = await _service.AuthenticationService
+            .CreateToken(populateExp: true);
+            return Ok(tokenDto);
         }
-
     }
 }
